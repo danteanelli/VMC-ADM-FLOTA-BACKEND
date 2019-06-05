@@ -2,6 +2,7 @@ package com.sistemavehiculos.models.servicesImp;
 
 import com.sistemavehiculos.models.dao.IUsuarioDAO;
 import com.sistemavehiculos.models.entity.Usuario;
+import com.sistemavehiculos.models.services.IUsuarioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
  *
  */
 @Service
-public class UsuarioService implements UserDetailsService {
+public class UsuarioService implements IUsuarioService, UserDetailsService {
 
     private Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 
@@ -45,6 +46,32 @@ public class UsuarioService implements UserDetailsService {
                 .peek(authority -> logger.info("Perfil: " + authority.getAuthority()))
                 .collect(Collectors.toList());
 
-        return new User(usuario.getEmail(), usuario.getContraseña(), usuario.getHabilitado(), true, true, true, authorities);
+        return new User(usuario.getEmail(), usuario.getPassword(), usuario.getHabilitado(), true, true, true, authorities);
+    }
+
+    @Override
+    @Transactional(readOnly=true)
+    public Usuario findByEmail(String email) {
+        return usuarioDAO.findByEmail(email);
+    }
+
+    @Override
+    public List<Usuario> findAll() {
+        return null;
+    }
+
+    @Override
+    public Usuario findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Usuario save(Usuario usuario) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
+
     }
 }

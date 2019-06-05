@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ *
+ */
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 @RestController
 @RequestMapping("/api")
 public class PerfilController {
@@ -16,11 +20,13 @@ public class PerfilController {
     @Autowired
     private IPerfilService perfilService;
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/perfiles")
     public List<Perfil> index() {
         return perfilService.findAll();
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/perfiles/{id}")
     public Perfil show(@PathVariable Long id) {
         return perfilService.findById(id);

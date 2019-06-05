@@ -1,7 +1,6 @@
 package com.sistemavehiculos.rest;
 
 import com.sistemavehiculos.models.entity.TipoLicencia;
-import com.sistemavehiculos.models.services.ITipoEquipoService;
 import com.sistemavehiculos.models.services.ITipoLicenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,7 @@ import java.util.List;
 /**
  *
  */
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 @RestController
 @RequestMapping("/api")
 public class TipoLicenciaController {

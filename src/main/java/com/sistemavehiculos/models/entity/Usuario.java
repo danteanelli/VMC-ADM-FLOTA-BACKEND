@@ -15,24 +15,28 @@ public class Usuario extends General {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nombre;
+
     private String apellido;
+
     private String empresa;
 
     @Column(unique = true)
     private String email;
 
-    private String contraseña;
+    private String password;
 
     private Boolean habilitado;
+
     private String nroCelular;
 
     //private List<Obras> obras;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name="usuarios_perfiles", joinColumns= @JoinColumn(name="usuario_id"),
-            inverseJoinColumns=@JoinColumn(name="perfil_id"),
-            uniqueConstraints= {@UniqueConstraint(columnNames= {"usuario_id", "perfil_id"})})
+    inverseJoinColumns=@JoinColumn(name="perfil_id"),
+    uniqueConstraints= {@UniqueConstraint(columnNames= {"usuario_id", "perfil_id"})})
     private List<Perfil> perfiles;
 
 
@@ -76,12 +80,12 @@ public class Usuario extends General {
         this.email = email;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Boolean getHabilitado() {

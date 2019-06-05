@@ -23,4 +23,19 @@ public class TipoEquipoServiceImp implements ITipoEquipoService {
     public List<TipoEquipo> findAll() {
         return (List<TipoEquipo>) tipoEquipoDao.findAll();
     }
+
+    @Override
+    public TipoEquipo findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public TipoEquipo save(TipoEquipo tipoEquipo) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
 }

@@ -12,20 +12,17 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    static final String CLIEN_ID = "appangular";
-    static final String CLIENT_SECRET = "123456";
-    static final String GRANT_TYPE_PASSWORD = "password";
-    static final String AUTHORIZATION_CODE = "authorization_code";
-    static final String REFRESH_TOKEN = "refresh_token";
-    static final String IMPLICIT = "implicit";
     static final String SCOPE_READ = "read";
     static final String SCOPE_WRITE = "write";
     static final int ACCESS_TOKEN_VALIDITY_SECONDS = 1*60*60;
@@ -38,6 +35,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Qualifier("authenticationManager")
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private InfoAdicionalToken infoAdicionalToken;
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.tokenKeyAccess("permitAll()")
@@ -46,20 +46,23 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient(CLIEN_ID)
-                .secret(passwordEncoder.encode(CLIENT_SECRET))
-                .scopes(SCOPE_READ, SCOPE_WRITE)
+        clients.inMemory().withClient("angularapp")
+                .secret(passwordEncoder.encode("123456"))
+                .scopes("read", "write")
                 .authorizedGrantTypes("password", "refresh_token")
-                .accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
-                .refreshTokenValiditySeconds(FREFRESH_TOKEN_VALIDITY_SECONDS);
+                .accessTokenValiditySeconds(3600)
+                .refreshTokenValiditySeconds(3600);
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(infoAdicionalToken, accessTokenConverter()));
+
         endpoints.authenticationManager(authenticationManager)
                 .tokenStore(tokenStore())
-                .accessTokenConverter(accessTokenConverter());
+                .accessTokenConverter(accessTokenConverter())
+                .tokenEnhancer(tokenEnhancerChain);
     }
 
     @Bean
@@ -70,6 +73,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+        jwtAccessTokenConverter.setSigningKey(JwfConfig.PRIVATE);
+        jwtAccessTokenConverter.setVerifierKey(JwfConfig.PUBLIC);
         return jwtAccessTokenConverter;
     }
 }
