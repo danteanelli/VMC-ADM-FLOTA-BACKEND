@@ -22,7 +22,9 @@ public class Chofer extends General {
     private String dni;
 
     private String fotoDNI;
+
     private String fotoLicenciaConducir;
+
     private Date vtoLicenciaConducir;
 
     @ManyToOne(fetch = FetchType.LAZY)
