@@ -21,18 +21,18 @@ public class MarcaController {
     private IMarcaService marcaService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/perfiles")
+    @GetMapping("/marcas")
     public List<Marca> index() {
         return marcaService.findAll();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/perfiles/{id}")
+    @GetMapping("/marcas/{id}")
     public Marca show(@PathVariable Long id) {
         return marcaService.findById(id);
     }
 
-    @PostMapping("/perfiles")
+    @PostMapping("/marcas")
     @ResponseStatus(HttpStatus.CREATED)
     public Marca create(@RequestBody Marca marca) {
         marca.setCreatedAt(new Date());
@@ -40,7 +40,7 @@ public class MarcaController {
         return marcaService.save(marca);
     }
 
-    @PutMapping("/perfiles/{id}")
+    @PutMapping("/marcas/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Marca update(@RequestBody Marca perfil, @PathVariable Long id) {
         Marca marcaActual = marcaService.findById(id);
@@ -51,7 +51,7 @@ public class MarcaController {
         return marcaService.save(marcaActual);
     }
 
-    @DeleteMapping("/perfiles/{id}")
+    @DeleteMapping("/marcas/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         marcaService.delete(id);
