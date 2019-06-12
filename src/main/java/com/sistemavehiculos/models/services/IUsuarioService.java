@@ -4,6 +4,9 @@ import com.sistemavehiculos.models.entity.Usuario;
 
 import java.util.List;
 
+/**
+ *
+ */
 public interface IUsuarioService {
 
     public Usuario findByEmail(String email);

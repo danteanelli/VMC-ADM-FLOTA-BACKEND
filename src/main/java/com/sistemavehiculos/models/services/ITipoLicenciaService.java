@@ -4,6 +4,9 @@ import com.sistemavehiculos.models.entity.TipoLicencia;
 
 import java.util.List;
 
+/**
+ *
+ */
 public interface ITipoLicenciaService {
 
     public List<TipoLicencia> findAll();

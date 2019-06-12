@@ -4,6 +4,9 @@ import com.sistemavehiculos.models.entity.Chofer;
 
 import java.util.List;
 
+/**
+ *
+ */
 public interface IChoferService {
 
     public List<Chofer> findAll();

@@ -4,6 +4,9 @@ import com.sistemavehiculos.models.entity.Perfil;
 
 import java.util.List;
 
+/**
+ *
+ */
 public interface IPerfilService {
 
     public List<Perfil> findAll();

@@ -42,10 +42,10 @@ public class MarcaController {
 
     @PutMapping("/marcas/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Marca update(@RequestBody Marca perfil, @PathVariable Long id) {
+    public Marca update(@RequestBody Marca marca, @PathVariable Long id) {
         Marca marcaActual = marcaService.findById(id);
 
-        marcaActual.setNombre(perfil.getNombre());
+        marcaActual.setNombre(marca.getNombre());
         marcaActual.setUpdatedAt(new Date());
 
         return marcaService.save(marcaActual);
