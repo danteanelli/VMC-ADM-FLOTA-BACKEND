@@ -1,6 +1,7 @@
 package com.sistemavehiculos.models.servicesImp;
 
 import com.sistemavehiculos.models.dao.IUsuarioDAO;
+import com.sistemavehiculos.models.entity.Perfil;
 import com.sistemavehiculos.models.entity.Usuario;
 import com.sistemavehiculos.models.services.IUsuarioService;
 import org.slf4j.Logger;
@@ -15,7 +16,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -40,13 +43,23 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
             throw new UsernameNotFoundException("Error en el login: no existe el usuario '"+email+"' en el sistema!");
         }
 
-        List<GrantedAuthority> authorities = usuario.getPerfiles()
+        /*List<GrantedAuthority> authorities = usuario.getPerfiles()
                 .stream()
                 .map(perfil -> new SimpleGrantedAuthority(perfil.getNombre()))
                 .peek(authority -> logger.info("Perfil: " + authority.getAuthority()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
 
-        return new User(usuario.getEmail(), usuario.getPassword(), usuario.getHabilitado(), true, true, true, authorities);
+        List<GrantedAuthority> grantedAuthorities = getAuthorities(usuario);
+
+        return new User(usuario.getEmail(), usuario.getPassword(), usuario.getHabilitado(), true, true, true, grantedAuthorities);
+    }
+
+    private List<GrantedAuthority> getAuthorities(Usuario usuario) {
+        List<Perfil> perfilByUserId = usuario.getPerfiles();
+        final List<GrantedAuthority> authorities = perfilByUserId.stream()
+                .map(perfil -> new SimpleGrantedAuthority(perfil.getNombre()))
+                .collect(Collectors.toList());
+        return authorities;
     }
 
     @Override
@@ -56,18 +69,20 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Usuario> findAll() {
-        return null;
+        return usuarioDAO.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Usuario findById(Long id) {
-        return null;
+        return usuarioDAO.findById(id).orElse(null);
     }
 
     @Override
     public Usuario save(Usuario usuario) {
-        return null;
+        return usuarioDAO.save(usuario);
     }
 
     @Override
