@@ -44,8 +44,11 @@ public class TallerController {
     @ResponseStatus(HttpStatus.CREATED)
     public Taller update(@RequestBody Taller taller, @PathVariable Long id) {
         Taller tallerActual = tallerService.findById(id);
-
+        tallerActual.setNombre(taller.getNombre());
         tallerActual.setDireccion(taller.getDireccion());
+        tallerActual.setTelefono(taller.getTelefono());
+        tallerActual.setResponsable(taller.getResponsable());
+        tallerActual.setCuit(taller.getCuit());
         tallerActual.setUpdatedAt(new Date());
 
         return tallerService.save(tallerActual);
