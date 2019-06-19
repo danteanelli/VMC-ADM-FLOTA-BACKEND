@@ -40,6 +40,7 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario create(@RequestBody Usuario usuario) {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setHabilitado(true);
         usuario.setCreatedAt(new Date());
         usuario.setUpdatedAt(new Date());
         return usuarioService.save(usuario);
