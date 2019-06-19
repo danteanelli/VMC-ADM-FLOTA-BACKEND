@@ -26,16 +26,16 @@ public class TipoEquipoServiceImp implements ITipoEquipoService {
 
     @Override
     public TipoEquipo findById(Long id) {
-        return null;
+        return tipoEquipoDao.findById(id).orElse(null);
     }
 
     @Override
     public TipoEquipo save(TipoEquipo tipoEquipo) {
-        return null;
+        return tipoEquipoDao.save(tipoEquipo);
     }
 
     @Override
     public void delete(Long id) {
-
+        tipoEquipoDao.deleteById(id);
     }
 }
