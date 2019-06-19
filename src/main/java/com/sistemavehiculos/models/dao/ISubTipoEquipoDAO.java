@@ -1,7 +1,8 @@
 package com.sistemavehiculos.models.dao;
 
 import com.sistemavehiculos.models.entity.SubTipoEquipo;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ISubTipoEquipoDAO extends CrudRepository<SubTipoEquipo, Long> {
+public interface ISubTipoEquipoDAO extends JpaRepository<SubTipoEquipo, Long> {
 }
