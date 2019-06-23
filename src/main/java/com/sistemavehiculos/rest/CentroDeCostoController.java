@@ -21,18 +21,18 @@ public class CentroDeCostoController {
     private ICentroDeCostoService centroDeCostoService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/choferes")
+    @GetMapping("/centrocostos")
     public List<CentroDeCosto> index() {
         return centroDeCostoService.findAll();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/choferes/{id}")
+    @GetMapping("/centrocostos/{id}")
     public CentroDeCosto show(@PathVariable Long id) {
         return centroDeCostoService.findById(id);
     }
 
-    @PostMapping("/choferes")
+    @PostMapping("/centrocostos")
     @ResponseStatus(HttpStatus.CREATED)
     public CentroDeCosto create(@RequestBody CentroDeCosto centroDeCosto) {
         centroDeCosto.setCreatedAt(new Date());
@@ -40,7 +40,7 @@ public class CentroDeCostoController {
         return centroDeCostoService.save(centroDeCosto);
     }
 
-    @PutMapping("/choferes/{id}")
+    @PutMapping("/centrocostos/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public CentroDeCosto update(@RequestBody CentroDeCosto centroDeCosto, @PathVariable Long id) {
         CentroDeCosto centroDeCostoActual = centroDeCostoService.findById(id);
@@ -52,7 +52,7 @@ public class CentroDeCostoController {
         return centroDeCostoService.save(centroDeCostoActual);
     }
 
-    @DeleteMapping("/choferes/{id}")
+    @DeleteMapping("/centrocostos/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         centroDeCostoService.delete(id);
